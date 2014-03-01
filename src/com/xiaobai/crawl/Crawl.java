@@ -65,15 +65,13 @@ public class Crawl extends Canvas implements Runnable {
             while (unprocessed >= 1) {
                 ticks++;
                 tick();
-                unprocessed -= 1;
+                unprocessed--;
             }
-
-            try {
-                Thread.sleep(3);
+            /*try {
+                Thread.sleep(2);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
-
+            }*/
             frames++;
             render();
 
