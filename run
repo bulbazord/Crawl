@@ -1,0 +1,5 @@
+#!/bin/bash
+
+gradle -q build
+java -jar bin/libs/Crawl-1.0.jar
+gradle -q clean
