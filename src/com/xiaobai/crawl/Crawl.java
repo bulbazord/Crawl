@@ -10,20 +10,36 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
+import com.xiaobai.crawl.graphics.Screen;
+
 public class Crawl extends Canvas implements Runnable {
-    public static final int HEIGHT = 600;
-    public static final int WIDTH = HEIGHT * 4 / 3;
+    public static final int HEIGHT = 300;
+    public static final int WIDTH = HEIGHT * 16 / 9;
 
     private boolean running;
+    private int tickCounter;
     private int[] pixels;
     private BufferedImage image;
-    private int tickCounter;
+    private JFrame frame;
+    private Screen screen;
 
     public Crawl() {
+        // Set up game stuff
         running = false;
         System.out.println("Starting!");
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+        screen = new Screen(WIDTH, HEIGHT);
+
+        // Set up Game window
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        frame = new JFrame("Crawl");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+        frame.add(this, BorderLayout.CENTER);
+        frame.setResizable(false);
+        frame.setVisible(true);
+        frame.pack();
     }
 
     public void start() {
@@ -46,24 +62,20 @@ public class Crawl extends Canvas implements Runnable {
             long now = System.nanoTime();
             unprocessed += (now - lastTime) / nsPerTick;
             lastTime = now;
-            boolean shouldRender = true;
             while (unprocessed >= 1) {
                 ticks++;
                 tick();
                 unprocessed -= 1;
-                shouldRender = true;
             }
 
             try {
-                Thread.sleep(2);
+                Thread.sleep(3);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            if (shouldRender) {
-                frames++;
-                render();
-            }
+            frames++;
+            render();
 
             if (System.currentTimeMillis() - lastTimer1 > 1000) {
                 lastTimer1 += 1000;
@@ -84,6 +96,13 @@ public class Crawl extends Canvas implements Runnable {
             createBufferStrategy(3);
             return;
         }
+
+        screen.clear();
+        screen.render();
+        for (int i = 0; i < pixels.length; i++) {
+            pixels[i] = screen.pixels[i];
+        }
+
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, WIDTH, HEIGHT, null);
         g.dispose();
@@ -92,16 +111,6 @@ public class Crawl extends Canvas implements Runnable {
 
     public static void main(String[] args) {
         Crawl crawl = new Crawl();
-        crawl.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
-        JFrame frame = new JFrame("Crawl");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        frame.add(crawl, BorderLayout.CENTER);
-
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.pack();
         crawl.start();
     }
 }
