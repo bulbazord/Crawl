@@ -4,10 +4,12 @@ import java.util.Random;
 
 public class Screen {
     private static int TILE_SIZE = 32;
+    public final int MAP_SIZE = 64;
+    public final int MAP_SIZE_MASK = MAP_SIZE - 1;
 
     private int width, height;
     public int[] pixels;
-    public int[] tiles = new int[64 * 64];
+    public int[] tiles;
     private Random rand;
 
     public Screen(int w, int h) {
@@ -15,6 +17,7 @@ public class Screen {
         height = h;
         pixels = new int[width * height];
         rand = new Random();
+        tiles = new int[MAP_SIZE * MAP_SIZE];
         for (int i = 0; i < tiles.length; i++) {
             tiles[i] = rand.nextInt(0xFFFFFF);
         }
@@ -27,12 +30,14 @@ public class Screen {
         }
     }
 
-    public void render() {
+    public void render(int xOffset, int yOffset) {
         for (int y = 0; y < height; y++) {
-            if (y < 0 || y >= height) break;
+            int yy = y + yOffset;
+            //if (yy < 0 || yy >= height) break;
             for (int x = 0; x < width; x++) { 
-                if (x < 0 || x >= width) break;
-                int tileIndex = (x / TILE_SIZE) + (y / TILE_SIZE) * 64;
+                int xx = x + xOffset; 
+                //if (xx < 0 || xx >= width) break;
+                int tileIndex = ((xx / TILE_SIZE) & MAP_SIZE_MASK) + ((yy / TILE_SIZE) & MAP_SIZE_MASK) * MAP_SIZE;
                 pixels[x + y * width] = tiles[tileIndex];
             }
         }
