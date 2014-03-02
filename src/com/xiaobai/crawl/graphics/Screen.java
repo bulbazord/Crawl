@@ -3,7 +3,7 @@ package com.xiaobai.crawl.graphics;
 import java.util.Random;
 
 public class Screen {
-    private static int TILE_SIZE = 32;
+    public static int TILE_SIZE = 32;
     public final int MAP_SIZE = 64;
     public final int MAP_SIZE_MASK = MAP_SIZE - 1;
 
@@ -33,10 +33,8 @@ public class Screen {
     public void render(int xOffset, int yOffset) {
         for (int y = 0; y < height; y++) {
             int yy = y + yOffset;
-            //if (yy < 0 || yy >= height) break;
             for (int x = 0; x < width; x++) { 
                 int xx = x + xOffset; 
-                //if (xx < 0 || xx >= width) break;
                 int tileIndex = ((xx >> 5) & MAP_SIZE_MASK) + ((yy >> 5) & MAP_SIZE_MASK) * MAP_SIZE;
                 pixels[x + y * width] = tiles[tileIndex];
             }

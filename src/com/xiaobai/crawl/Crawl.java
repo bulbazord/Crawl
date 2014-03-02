@@ -11,6 +11,7 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.xiaobai.crawl.graphics.Screen;
+import com.xiaobai.crawl.input.Keyboard;
 
 public class Crawl extends Canvas implements Runnable {
     public static final int HEIGHT = 600;
@@ -86,11 +87,10 @@ public class Crawl extends Canvas implements Runnable {
     }
 
     public void tick() {
-        keyboard.tick();
-        if (keyboard.up) down--;
-        if (keyboard.down) down++;
-        if (keyboard.right) right++;
-        if (keyboard.left) right--;
+        if (keyboard.up.move()) down = down - screen.TILE_SIZE;
+        if (keyboard.down.move()) down = down + screen.TILE_SIZE;
+        if (keyboard.left.move()) right = right - screen.TILE_SIZE;
+        if (keyboard.right.move()) right = right + screen.TILE_SIZE;
     }
 
     public void render() {
