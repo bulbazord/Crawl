@@ -3,6 +3,8 @@ package com.xiaobai.crawl.graphics;
 import java.util.Random;
 
 public class Screen {
+    private static int TILE_SIZE = 32;
+
     private int width, height;
     public int[] pixels;
     public int[] tiles = new int[64 * 64];
@@ -14,7 +16,7 @@ public class Screen {
         pixels = new int[width * height];
         rand = new Random();
         for (int i = 0; i < tiles.length; i++) {
-            tiles[i] = random.nextInt(0x1000000);
+            tiles[i] = rand.nextInt(0xFFFFFF);
         }
 
     }
@@ -30,7 +32,8 @@ public class Screen {
             if (y < 0 || y >= height) break;
             for (int x = 0; x < width; x++) { 
                 if (x < 0 || x >= width) break;
-                pixels[x + y * width] = 0xFF00FF;
+                int tileIndex = (x / TILE_SIZE) + (y / TILE_SIZE) * 64;
+                pixels[x + y * width] = tiles[tileIndex];
             }
         }
     }

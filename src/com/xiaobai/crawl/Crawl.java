@@ -13,8 +13,8 @@ import javax.swing.JFrame;
 import com.xiaobai.crawl.graphics.Screen;
 
 public class Crawl extends Canvas implements Runnable {
-    public static final int HEIGHT = 300;
-    public static final int WIDTH = HEIGHT * 16 / 9;
+    public static final int HEIGHT = 600;
+    public static final int WIDTH = 800;
 
     private boolean running;
     private int tickCounter;
