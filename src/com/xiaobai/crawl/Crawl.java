@@ -18,9 +18,11 @@ public class Crawl extends Canvas implements Runnable {
 
     private boolean running;
     private int tickCounter;
+    private int down, right;
     private int[] pixels;
     private BufferedImage image;
     private JFrame frame;
+    private Keyboard keyboard;
     private Screen screen;
 
     public Crawl() {
@@ -30,6 +32,10 @@ public class Crawl extends Canvas implements Runnable {
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
         screen = new Screen(WIDTH, HEIGHT);
+        keyboard = new Keyboard();
+        addKeyListener(keyboard);
+        down = 0;
+        right = 0;
 
         // Set up Game window
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -67,11 +73,6 @@ public class Crawl extends Canvas implements Runnable {
                 tick();
                 unprocessed--;
             }
-            /*try {
-                Thread.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
             frames++;
             render();
 
@@ -85,7 +86,11 @@ public class Crawl extends Canvas implements Runnable {
     }
 
     public void tick() {
-        tickCounter++;
+        keyboard.tick();
+        if (keyboard.up) down--;
+        if (keyboard.down) down++;
+        if (keyboard.right) right++;
+        if (keyboard.left) right--;
     }
 
     public void render() {
@@ -96,7 +101,7 @@ public class Crawl extends Canvas implements Runnable {
         }
 
         screen.clear();
-        screen.render(tickCounter, 0);
+        screen.render(right, down);
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = screen.pixels[i];
         }
