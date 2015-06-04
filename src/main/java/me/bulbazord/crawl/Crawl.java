@@ -1,4 +1,4 @@
-package com.xiaobai.crawl;
+package me.bulbazord.crawl;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -10,8 +10,8 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
-import com.xiaobai.crawl.graphics.Screen;
-import com.xiaobai.crawl.input.Keyboard;
+import me.bulbazord.crawl.graphics.Screen;
+import me.bulbazord.crawl.input.Keyboard;
 
 public class Crawl extends Canvas implements Runnable {
     public static final int HEIGHT = 600;

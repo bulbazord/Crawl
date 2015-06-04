@@ -1,11 +1,11 @@
-package com.xiaobai.crawl.input;
+package me.bulbazord.crawl.input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.xiaobai.crawl.input.Key;
+import me.bulbazord.crawl.input.Key;
 
 public class Keyboard implements KeyListener {
     public List<Key> keys = new ArrayList<Key>();

@@ -1,13 +1,9 @@
 apply plugin: 'java'
 
-version=1.0
+version = '1.0'
 
 sourceSets {
     main {
-        java {
-            srcDir file('src/com/xiaobai/crawl')
-            buildDir file('bin/')
-        }
         resources {
             srcDir file('res/')
         }
@@ -16,6 +12,8 @@ sourceSets {
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Crawl', 'Implementation-Version': version, 'Main-Class': 'com.xiaobai.crawl.Crawl', 'Class-Path': 'bin/classes/main/com/xiaobai/crawl'
+        attributes 'Implementation-Title': 'Crawl', 
+        'Implementation-Version': version, 
+        'Main-Class': 'me.bulbazord.crawl.Crawl'
     }
 }

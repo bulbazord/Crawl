@@ -1,4 +1,4 @@
-package com.xiaobai.crawl.input;
+package me.bulbazord.crawl.input;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.xiaobai.crawl.graphics;
+package me.bulbazord.crawl.graphics;
 
 import java.util.Random;
 
